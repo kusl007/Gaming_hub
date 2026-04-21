@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { gamesData } from "@/lib/games-data";
 import { hardwareData } from "@/lib/hardware-data";
 import AddToCartButton from "@/app/components/AddToCartButton";
+import MotionInView from "@/app/components/motion/MotionInView";
 
 const windowedItems = <T,>(items: T[], start: number, size: number) =>
   Array.from({ length: size }, (_, idx) => items[(start + idx) % items.length]);
@@ -60,7 +61,7 @@ export default function Home() {
       </section>
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
-        <div className="flex items-center justify-between mb-10">
+        <MotionInView className="flex items-center justify-between mb-10">
           <h2 className="text-3xl font-bold text-white flex items-center gap-3">
             FEATURED GAMES
             <div className="w-4 h-8 bg-neon-green transform skew-x-[-15deg]"></div>
@@ -87,11 +88,11 @@ export default function Home() {
               </svg>
             </button>
           </div>
-        </div>
+        </MotionInView>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredGames.map((game) => (
-            <div key={game.id} className="bg-surface rounded-xl overflow-hidden border border-gray-800 hover:border-neon-green/50 transition-colors group flex flex-col h-full shadow-lg">
+            <MotionInView key={game.id} className="bg-surface rounded-xl overflow-hidden border border-gray-800 hover:border-neon-green/50 transition-colors group flex flex-col h-full shadow-lg">
               <Link href={`/games/${game.id}`} className="block h-60 overflow-hidden relative p-3">
                 <img
                   src={game.image}
@@ -129,13 +130,13 @@ export default function Home() {
                   className="mt-3 w-full bg-black border border-neon-green text-neon-green hover:bg-neon-green hover:text-black font-bold py-2.5 rounded-lg transition-all uppercase text-xs tracking-wider"
                 />
               </div>
-            </div>
+            </MotionInView>
           ))}
         </div>
       </section>
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16 w-full">
-        <div className="flex items-center justify-between mb-10">
+        <MotionInView className="flex items-center justify-between mb-10">
           <h2 className="text-3xl font-bold text-white flex items-center gap-3">
             GAMING HARDWARE
             <div className="w-4 h-8 bg-neon-purple transform skew-x-[-15deg]"></div>
@@ -164,11 +165,11 @@ export default function Home() {
               </svg>
             </button>
           </div>
-        </div>
+        </MotionInView>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {featuredHardware.map((item) => (
-            <div key={item.id} className="bg-surface rounded-xl overflow-hidden border border-gray-800 hover:border-neon-purple/50 transition-all group flex flex-col shadow-lg">
+            <MotionInView key={item.id} className="bg-surface rounded-xl overflow-hidden border border-gray-800 hover:border-neon-purple/50 transition-all group flex flex-col shadow-lg">
               <Link href={`/hardware/${item.id}`} className="h-56 p-4 bg-white/5 flex items-center justify-center shrink-0">
                 <img src={item.image} alt={item.title} className="object-contain h-full" />
               </Link>
@@ -190,7 +191,7 @@ export default function Home() {
                   />
                 </div>
               </div>
-            </div>
+            </MotionInView>
           ))}
         </div>
       </section>
@@ -198,7 +199,7 @@ export default function Home() {
       {/* Extra sections to ensure rich scrollable homepage */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-7 rounded-2xl border border-gray-800 bg-surface/40 p-6 md:p-8">
+          <MotionInView className="lg:col-span-7 rounded-2xl border border-gray-800 bg-surface/40 p-6 md:p-8">
             <h2 className="text-3xl font-black text-white mb-3">
               Sandeep&apos;s Picks
             </h2>
@@ -218,9 +219,9 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
+          </MotionInView>
 
-          <div className="lg:col-span-5 rounded-2xl border border-gray-800 bg-surface/40 p-6 md:p-8">
+          <MotionInView className="lg:col-span-5 rounded-2xl border border-gray-800 bg-surface/40 p-6 md:p-8" delay={0.05}>
             <h2 className="text-2xl font-bold text-white mb-4">Store Highlights</h2>
             <div className="space-y-4">
               {[
@@ -242,7 +243,7 @@ export default function Home() {
                 Contact Support
               </Link>
             </div>
-          </div>
+          </MotionInView>
         </div>
       </section>
     </div>

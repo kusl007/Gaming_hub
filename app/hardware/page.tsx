@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { hardwareData } from "@/lib/hardware-data";
 import AddToCartButton from "@/app/components/AddToCartButton";
+import MotionInView from "@/app/components/motion/MotionInView";
 
 export default function HardwarePage() {
   return (
@@ -43,7 +44,7 @@ export default function HardwarePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {hardwareData.map((item) => (
-              <div key={item.id} className="bg-surface rounded-2xl overflow-hidden border border-gray-800 transition-colors group flex flex-col h-full shadow-lg">
+              <MotionInView key={item.id} className="bg-surface rounded-2xl overflow-hidden border border-gray-800 transition-colors group flex flex-col h-full shadow-lg">
                 <Link href={`/hardware/${item.id}`} className="h-64 bg-white/5 flex items-center justify-center p-8 relative overflow-hidden">
                   <img 
                     src={item.image} 
@@ -83,7 +84,7 @@ export default function HardwarePage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </MotionInView>
             ))}
           </div>
         </div>

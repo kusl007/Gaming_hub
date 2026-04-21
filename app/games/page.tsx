@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { gamesData } from "@/lib/games-data";
 import AddToCartButton from "@/app/components/AddToCartButton";
+import MotionInView from "@/app/components/motion/MotionInView";
 
 export default function GamesPage() {
   return (
@@ -32,7 +33,7 @@ export default function GamesPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {gamesData.map((game) => (
-              <div key={game.id} className="bg-surface rounded-xl overflow-hidden border border-gray-800 hover:border-neon-green/50 transition-colors group flex flex-col h-full shadow-lg">
+              <MotionInView key={game.id} className="bg-surface rounded-xl overflow-hidden border border-gray-800 hover:border-neon-green/50 transition-colors group flex flex-col h-full shadow-lg">
                 <Link href={`/games/${game.id}`} className="block h-60 overflow-hidden relative p-3">
                   <img 
                     src={game.image} 
@@ -73,7 +74,7 @@ export default function GamesPage() {
                     />
                   </div>
                 </div>
-              </div>
+              </MotionInView>
             ))}
           </div>
         </div>

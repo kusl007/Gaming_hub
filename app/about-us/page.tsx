@@ -1,4 +1,5 @@
 import Image from "next/image";
+import MotionInView from "@/app/components/motion/MotionInView";
 
 export default function AboutUsPage() {
   const pillars = [
@@ -36,7 +37,7 @@ export default function AboutUsPage() {
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-14">
-          <div className="lg:col-span-5">
+          <MotionInView className="lg:col-span-5">
             <div className="rounded-2xl border border-gray-800 bg-surface/40 p-3">
               <Image
                 src="/sandeep.jpeg"
@@ -46,8 +47,8 @@ export default function AboutUsPage() {
                 className="w-full h-[360px] md:h-[420px] object-cover rounded-xl"
               />
             </div>
-          </div>
-          <div className="lg:col-span-7">
+          </MotionInView>
+          <MotionInView className="lg:col-span-7" delay={0.05}>
             <p className="text-neon-green uppercase tracking-[0.22em] text-xs mb-3">Founder & CEO</p>
             <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
               Sandeep
@@ -70,15 +71,15 @@ export default function AboutUsPage() {
                 <p className="text-gray-400 text-sm mt-1">Tournaments & support built-in.</p>
               </div>
             </div>
-          </div>
+          </MotionInView>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {pillars.map((pillar) => (
-            <article key={pillar.title} className="rounded-2xl border border-gray-800 bg-surface/40 p-6 hover:border-neon-green/40 transition-colors">
+            <MotionInView key={pillar.title} className="rounded-2xl border border-gray-800 bg-surface/40 p-6 hover:border-neon-green/40 transition-colors">
               <h2 className="text-xl font-bold text-white mb-3">{pillar.title}</h2>
               <p className="text-gray-400">{pillar.description}</p>
-            </article>
+            </MotionInView>
           ))}
         </div>
       </section>

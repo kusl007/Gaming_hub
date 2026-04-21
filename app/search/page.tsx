@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { gamesData } from "@/lib/games-data";
 import { hardwareData } from "@/lib/hardware-data";
+import MotionInView from "@/app/components/motion/MotionInView";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
@@ -65,18 +66,19 @@ export default function SearchPage() {
             <h2 className="text-2xl font-bold text-white mb-5">Games</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {matchedGames.map((game) => (
-                <Link
-                  key={game.id}
-                  href={`/games/${game.id}`}
-                  className="rounded-xl border border-gray-800 bg-surface/50 overflow-hidden hover:border-neon-green/50 transition-colors"
-                >
-                  <img src={game.image} alt={game.title} className="h-44 w-full object-cover" />
-                  <div className="p-4">
-                    <h3 className="text-white font-semibold">{game.title}</h3>
-                    <p className="text-xs text-gray-400 mt-1">{game.platform}</p>
-                    <p className="text-neon-green font-bold mt-3">{game.price}</p>
-                  </div>
-                </Link>
+                <MotionInView key={game.id}>
+                  <Link
+                    href={`/games/${game.id}`}
+                    className="block rounded-xl border border-gray-800 bg-surface/50 overflow-hidden hover:border-neon-green/50 transition-colors"
+                  >
+                    <img src={game.image} alt={game.title} className="h-44 w-full object-cover" />
+                    <div className="p-4">
+                      <h3 className="text-white font-semibold">{game.title}</h3>
+                      <p className="text-xs text-gray-400 mt-1">{game.platform}</p>
+                      <p className="text-neon-green font-bold mt-3">{game.price}</p>
+                    </div>
+                  </Link>
+                </MotionInView>
               ))}
             </div>
           </div>
@@ -87,22 +89,23 @@ export default function SearchPage() {
             <h2 className="text-2xl font-bold text-white mb-5">Hardware</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {matchedHardware.map((item) => (
-                <Link
-                  key={item.id}
-                  href={`/hardware/${item.id}`}
-                  className="rounded-xl border border-gray-800 bg-surface/50 overflow-hidden hover:border-neon-purple/50 transition-colors"
-                >
-                  <div className="h-44 w-full bg-white/5 p-4 flex items-center justify-center">
-                    <img src={item.image} alt={item.title} className="h-full object-contain" />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-white font-semibold">{item.title}</h3>
-                    <p className="text-xs text-gray-400 mt-1">
-                      {item.category} - {item.platform}
-                    </p>
-                    <p className="text-neon-purple font-bold mt-3">{item.price}</p>
-                  </div>
-                </Link>
+                <MotionInView key={item.id}>
+                  <Link
+                    href={`/hardware/${item.id}`}
+                    className="block rounded-xl border border-gray-800 bg-surface/50 overflow-hidden hover:border-neon-purple/50 transition-colors"
+                  >
+                    <div className="h-44 w-full bg-white/5 p-4 flex items-center justify-center">
+                      <img src={item.image} alt={item.title} className="h-full object-contain" />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-white font-semibold">{item.title}</h3>
+                      <p className="text-xs text-gray-400 mt-1">
+                        {item.category} - {item.platform}
+                      </p>
+                      <p className="text-neon-purple font-bold mt-3">{item.price}</p>
+                    </div>
+                  </Link>
+                </MotionInView>
               ))}
             </div>
           </div>
