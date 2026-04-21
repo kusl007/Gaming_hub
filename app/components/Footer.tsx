@@ -7,10 +7,10 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
-            <span className="text-2xl font-bold tracking-tighter text-white">
-              EVOLUTION<span className="text-neon-purple">.</span>
-            </span>
-               <Image src="/logo.png" alt="Logo"className=" w-1/3" width={40} height={40}/>
+            <div className="flex items-center gap-3">
+              <Image src="/logo.png" alt="Sandeep Gaming Store logo" className="w-12 h-12 rounded-md" width={48} height={48} />
+              <span className="text-2xl font-bold tracking-tight text-white">Sandeep Gaming Store</span>
+            </div>
             <p className="mt-4 text-gray-400 max-w-sm">
               The ultimate destination for next-gen gaming. Discover the latest AAA titles, cutting-edge hardware, and exclusive gear.
             </p>
@@ -29,6 +29,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/tournament" className="text-base text-gray-400 hover:text-neon-purple transition-colors">
+                  Tournament
+                </Link>
+              </li>
+              <li>
                 <Link href="/new-releases" className="text-base text-gray-400 hover:text-neon-purple transition-colors">
                   New Releases
                 </Link>
@@ -39,13 +44,13 @@ export default function Footer() {
             <h3 className="text-sm font-semibold text-white tracking-wider uppercase mb-4">Support</h3>
             <ul className="space-y-4">
               <li>
-                <Link href="/contact" className="text-base text-gray-400 hover:text-neon-purple transition-colors">
+                <Link href="/contact-us" className="text-base text-gray-400 hover:text-neon-purple transition-colors">
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-base text-gray-400 hover:text-neon-purple transition-colors">
-                  FAQ
+                <Link href="/about-us" className="text-base text-gray-400 hover:text-neon-purple transition-colors">
+                  About Us
                 </Link>
               </li>
               <li>
@@ -58,7 +63,7 @@ export default function Footer() {
         </div>
         <div className="mt-12 border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-base text-gray-400">
-            &copy; 2026 Evolution Gaming Hub. All rights reserved.
+            &copy; 2026 Sandeep Gaming Store. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
              {/* Simple social icons */}

@@ -1,27 +1,52 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/games", label: "Games" },
+  { href: "/hardware", label: "Hardware" },
+  { href: "/tournament", label: "Tournament" },
+  { href: "/about-us", label: "About Us" },
+  { href: "/contact-us", label: "Contact Us" },
+];
 
 export default function Navbar() {
+  const pathname = usePathname();
+
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
+
   return (
     <nav className="border-b border-surface/50 bg-background/80 backdrop-blur-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-8">
-            <Link href="/" className="flex-shrink-0">
-              <span className="text-2xl font-bold tracking-tighter text-white">
-                EVOLUTION<span className="text-neon-green">.</span>
+          <div className="flex items-center gap-6">
+            <Link href="/" className="flex items-center gap-3 shrink-0">
+              <Image src="/logo.png" alt="Sandeep Gaming Store logo" width={36} height={36} className="rounded-md" />
+              <span className="text-lg lg:text-xl font-bold tracking-tight text-white">
+                Sandeep Gaming Store
               </span>
             </Link>
             <div className="hidden md:block">
-              <div className="flex items-baseline space-x-6">
-                <Link href="/" className="text-neon-green px-3 py-2 text-sm font-medium border-b-2 border-neon-green">
-                  HOME
-                </Link>
-                <Link href="/games" className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors hover:text-neon-green border-b-2 border-transparent hover:border-neon-green/50">
-                  GAMES
-                </Link>
-                <Link href="/hardware" className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition-colors hover:text-neon-green border-b-2 border-transparent hover:border-neon-green/50">
-                  HARDWARE
-                </Link>
+              <div className="flex items-baseline space-x-2 lg:space-x-4">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`px-2 lg:px-3 py-2 text-xs lg:text-sm font-medium uppercase transition-colors border-b-2 ${
+                      isActive(link.href)
+                        ? "text-neon-green border-neon-green"
+                        : "text-gray-300 hover:text-neon-green border-transparent hover:border-neon-green/50"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Evolution Gaming Store",
-  description: "The ultimate destination for next-gen gaming",
+  title: "Sandeep Gaming Store",
+  description: "Advanced static gaming storefront for games, hardware, and tournaments",
 };
 
 export default function RootLayout({
@@ -31,7 +31,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <Navbar />
-        <main className="flex-grow">
+        <main className="grow">
           {children}
         </main>
         <Footer />
