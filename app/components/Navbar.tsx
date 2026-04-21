@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const navLinks = [
@@ -16,9 +16,12 @@ const navLinks = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [cartCount, setCartCount] = useState(0);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     const loadUserAndCart = async () => {
@@ -48,6 +51,11 @@ export default function Navbar() {
     loadUserAndCart();
   }, [pathname]);
 
+  useEffect(() => {
+    const q = searchParams.get("q");
+    setQuery(q ?? "");
+  }, [searchParams]);
+
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
@@ -59,6 +67,17 @@ export default function Navbar() {
     setCartCount(0);
     setIsMobileMenuOpen(false);
     window.location.href = "/";
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = query.trim();
+    if (!trimmed) {
+      router.push("/search");
+      return;
+    }
+    router.push(`/search?q=${encodeURIComponent(trimmed)}`);
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -89,7 +108,7 @@ export default function Navbar() {
           </div>
           
           <div className="flex items-center gap-2 sm:gap-4">
-            <div className="relative hidden lg:block">
+            <form onSubmit={handleSearchSubmit} className="relative hidden lg:block">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -97,10 +116,12 @@ export default function Navbar() {
               </div>
               <input
                 type="text"
-                className="bg-surface border border-gray-700 text-sm rounded-full focus:ring-neon-green focus:border-neon-green block w-full pl-10 p-2 placeholder-gray-400 text-white"
-                placeholder="Search Games..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="bg-surface border border-gray-700 text-sm rounded-full focus:ring-neon-green focus:border-neon-green block w-full pl-10 pr-4 p-2 placeholder-gray-400 text-white"
+                placeholder="Search games & hardware..."
               />
-            </div>
+            </form>
             
             <Link href="/cart" className="text-gray-300 hover:text-white p-2 relative">
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -153,6 +174,15 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <div className="lg:hidden border-t border-gray-800 bg-background/95 backdrop-blur-md">
           <div className="px-4 py-4 space-y-2">
+            <form onSubmit={handleSearchSubmit} className="mb-3">
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search games & hardware..."
+                className="w-full rounded-lg border border-gray-700 bg-black/30 px-3 py-2 text-sm text-white"
+              />
+            </form>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
