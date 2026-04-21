@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { gamesData } from "@/lib/games-data";
 import { hardwareData } from "@/lib/hardware-data";
 import MotionInView from "@/app/components/motion/MotionInView";
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const query = (searchParams.get("q") || "").trim();
   const normalized = query.toLowerCase();
@@ -112,5 +112,19 @@ export default function SearchPage() {
         ) : null}
       </section>
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center text-white">
+          Loading...
+        </div>
+      }
+    >
+      <SearchContent />
+    </Suspense>
   );
 }

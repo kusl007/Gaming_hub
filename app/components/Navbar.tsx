@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const navLinks = [
@@ -17,7 +17,6 @@ const navLinks = [
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [cartCount, setCartCount] = useState(0);
@@ -52,9 +51,11 @@ export default function Navbar() {
   }, [pathname]);
 
   useEffect(() => {
-    const q = searchParams.get("q");
-    setQuery(q ?? "");
-  }, [searchParams]);
+    // Avoid useSearchParams in layout-level navbar to prevent prerender errors.
+    if (typeof window === "undefined") return;
+    const url = new URL(window.location.href);
+    setQuery(url.searchParams.get("q") ?? "");
+  }, [pathname]);
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
