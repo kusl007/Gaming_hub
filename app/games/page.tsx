@@ -1,15 +1,7 @@
 import Link from "next/link";
+import { gamesData } from "@/lib/games-data";
 
 export default function GamesPage() {
-  const games = [
-    { id: 1, title: "Pragmata", platform: "Pragmata - Xbox Series X|S", price: "47.58 €", rating: 5, image: "/games/images/1.jpg", video: "/games/videos/1.webm" },
-    { id: 2, title: "Split Fiction-29%", platform: "Split Fiction - Xbox Series X|S", price: "35.57 €", rating: 5, image: "/games/images/2.jpg", video: "/games/videos/2.webm" },
-    { id: 3, title: "Borderlands 4 Super Deluxe Edition-43%", platform: "Borderlands 4 Super Deluxe Edition - Xbox Series X|S", price: "73.99 €", rating: 5, image: "/games/images/3.jpg", video: "/games/videos/3.webm" },
-    { id: 4, title: "Minecraft Ultimate Collection-47%", platform: "Minecraft Ultimate Collection - Xbox One & Xbox Series X|S", price: "21.25 €", rating: 5, image: "/games/images/4.jpg", video: "/games/videos/4.webm" },
-    { id: 5, title: "PGA Tour 2K25-60%", platform: "PGA Tour 2K25 - Xbox Series X|S", price: "29.99 €", rating: 5, image: "/games/images/5.jpg", video: "/games/videos/5.webm" },
-    { id: 6, title: "NHL 26-74%", platform: "NHL 26 - Xbox Series X|S", price: "29.99 €", rating: 5, image: "/games/images/6.jpg", video: "/games/videos/6.webm" },
-  ];
-
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       {/* Premium Header */}
@@ -20,7 +12,7 @@ export default function GamesPage() {
             alt="Gaming Library" 
             className="w-full h-full object-cover opacity-30"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-background via-background/80 to-transparent"></div>
         </div>
         <div className="relative z-10 text-center px-4">
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter text-white mb-4">
@@ -38,9 +30,9 @@ export default function GamesPage() {
           
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {games.map((game) => (
+            {gamesData.map((game) => (
               <div key={game.id} className="bg-surface rounded-xl overflow-hidden border border-gray-800 hover:border-neon-green/50 transition-colors group flex flex-col h-full shadow-lg">
-                <Link href={`/product/${game.id}`} className="block h-60 overflow-hidden relative p-3">
+                <Link href={`/games/${game.id}`} className="block h-60 overflow-hidden relative p-3">
                   <img 
                     src={game.image} 
                     alt={game.title} 
@@ -57,7 +49,7 @@ export default function GamesPage() {
                   />
                 </Link>
                 <div className="p-4 flex flex-col flex-1">
-                  <Link href={`/product/${game.id}`}>
+                  <Link href={`/games/${game.id}`}>
                     <h3 className="font-bold text-lg text-white mb-1 uppercase line-clamp-1 hover:text-neon-green transition-colors">{game.title}</h3>
                   </Link>
                   <p className="text-xs text-neon-green/80 mb-3 uppercase font-medium">{game.platform}</p>
