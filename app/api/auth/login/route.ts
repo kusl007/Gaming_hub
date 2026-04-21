@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import dbConnect from '@/lib/mongodb';
 import User from '@/models/User';
+import { signAuthToken } from '@/lib/auth';
 
 export async function POST(req: Request) {
   try {
@@ -37,15 +37,11 @@ export async function POST(req: Request) {
       );
     }
 
-    // Generate JWT token
-    // We strictly use a secret here, fallback for dev but should be in .env in production
-    const jwtSecret = process.env.JWT_SECRET || 'fallback_secret_for_development_only';
-    
-    const token = jwt.sign(
-      { id: user._id, username: user.username, email: user.email },
-      jwtSecret,
-      { expiresIn: '7d' }
-    );
+    const token = signAuthToken({
+      id: String(user._id),
+      username: user.username,
+      email: user.email,
+    });
 
     // Create response
     const response = NextResponse.json(

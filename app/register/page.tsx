@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -38,8 +40,9 @@ export default function RegisterPage() {
         throw new Error(data.error || "Something went wrong during registration");
       }
 
-      // Automatically redirect to login page after successful registration
-      router.push("/login?registered=true");
+      const redirectTo = searchParams.get("redirect") || "/";
+      router.push(redirectTo);
+      router.refresh();
       
     } catch (err: any) {
       setError(err.message);
@@ -61,7 +64,7 @@ export default function RegisterPage() {
           
           <div className="text-center mb-10">
             <h1 className="text-3xl font-black tracking-tighter text-white mb-2 uppercase">
-              Join <span className="text-neon-purple">Evolution</span>
+              Join <span className="text-neon-purple">Sandeep Store</span>
             </h1>
             <p className="text-gray-400 text-sm">
               Create an account to track orders and save your wishlist.
@@ -103,7 +106,7 @@ export default function RegisterPage() {
               <div className="space-y-2">
                 <label className="text-xs font-bold text-gray-400 uppercase tracking-wider pl-1">Password</label>
                 <input 
-                  type="password" 
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -115,7 +118,7 @@ export default function RegisterPage() {
               <div className="space-y-2">
                 <label className="text-xs font-bold text-gray-400 uppercase tracking-wider pl-1">Confirm</label>
                 <input 
-                  type="password" 
+                  type={showPassword ? "text" : "password"}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
@@ -124,6 +127,14 @@ export default function RegisterPage() {
                 />
               </div>
             </div>
+
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="text-xs text-gray-400 hover:text-white"
+            >
+              {showPassword ? "Hide passwords" : "Show passwords"}
+            </button>
 
             <div className="pt-2 pb-4">
               <label className="flex items-center gap-3 cursor-pointer group">

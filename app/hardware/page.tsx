@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { hardwareData } from "@/lib/hardware-data";
+import AddToCartButton from "@/app/components/AddToCartButton";
 
 export default function HardwarePage() {
   return (
@@ -59,16 +60,27 @@ export default function HardwarePage() {
                   <p className="text-sm text-neon-purple/80 mb-6 uppercase font-medium tracking-wide">{item.category}</p>
                   <p className="text-sm text-gray-400 mb-6 line-clamp-3">{item.description}</p>
                   
-                  <div className="mt-auto flex items-end justify-between border-t border-gray-800/50 pt-5">
+                  <div className="mt-auto flex items-end justify-between border-t border-gray-800/50 pt-5 gap-3">
                     <div>
                       <div className="flex text-yellow-500 text-xs mb-1">
                         {"★".repeat(item.rating)}{"☆".repeat(5-item.rating)}
                       </div>
                       <span className="font-bold text-white text-2xl tracking-tight">{item.price}</span>
                     </div>
-                    <Link href={`/hardware/${item.id}`} className="bg-transparent border border-neon-purple text-neon-purple hover:bg-neon-purple hover:text-white font-bold py-3 px-6 rounded-lg transition-all uppercase text-sm tracking-wider shadow-[0_0_10px_rgba(176,38,255,0.1)] hover:shadow-[0_0_20px_rgba(176,38,255,0.4)]">
-                      View Details
-                    </Link>
+                    <div className="flex flex-col gap-2 items-end">
+                      <AddToCartButton
+                        productId={item.id}
+                        productType="hardware"
+                        title={item.title}
+                        platform={item.platform}
+                        price={item.price}
+                        image={item.image}
+                        className="bg-neon-purple/10 border border-neon-purple text-neon-purple hover:bg-neon-purple hover:text-white font-bold py-2 px-4 rounded-lg transition-all uppercase text-xs tracking-wider"
+                      />
+                      <Link href={`/hardware/${item.id}`} className="text-xs text-gray-300 hover:text-white">
+                        View Details
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>

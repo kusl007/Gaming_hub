@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { gamesData } from "@/lib/games-data";
 import { hardwareData } from "@/lib/hardware-data";
+import AddToCartButton from "@/app/components/AddToCartButton";
 
 const windowedItems = <T,>(items: T[], start: number, size: number) =>
   Array.from({ length: size }, (_, idx) => items[(start + idx) % items.length]);
@@ -118,6 +119,15 @@ export default function Home() {
                     {"★".repeat(game.rating)}{"☆".repeat(5 - game.rating)}
                   </div>
                 </div>
+                <AddToCartButton
+                  productId={game.id}
+                  productType="game"
+                  title={game.title}
+                  platform={game.platform}
+                  price={game.price}
+                  image={game.image}
+                  className="mt-3 w-full bg-black border border-neon-green text-neon-green hover:bg-neon-green hover:text-black font-bold py-2.5 rounded-lg transition-all uppercase text-xs tracking-wider"
+                />
               </div>
             </div>
           ))}
@@ -169,6 +179,15 @@ export default function Home() {
                 <p className="text-sm text-gray-400 mb-4 line-clamp-2">{item.description}</p>
                 <div className="mt-auto flex flex-col gap-3">
                   <span className="font-bold text-2xl text-white block">{item.price}</span>
+                  <AddToCartButton
+                    productId={item.id}
+                    productType="hardware"
+                    title={item.title}
+                    platform={item.platform}
+                    price={item.price}
+                    image={item.image}
+                    className="w-full bg-neon-purple/10 border border-neon-purple text-neon-purple hover:bg-neon-purple hover:text-white font-bold py-2.5 rounded-lg transition-all uppercase text-xs tracking-wider"
+                  />
                 </div>
               </div>
             </div>

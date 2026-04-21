@@ -1,30 +1,74 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+type CartItem = {
+  _id: string;
+  productId: number;
+  productType: "game" | "hardware";
+  title: string;
+  platform: string;
+  price: number;
+  quantity: number;
+  image: string;
+};
 
 export default function CartPage() {
-  // Mock cart data
-  const [cartItems, setCartItems] = useState([
-    { id: 1, title: "Cyberpunk 2077: Phantom Liberty", platform: "PC", price: 49.99, quantity: 1, image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop" },
-    { id: 3, title: "Pro Gaming Keyboard", platform: "Peripherals", price: 129.99, quantity: 1, image: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=600&auto=format&fit=crop" }
-  ]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [authError, setAuthError] = useState("");
 
-  const updateQuantity = (id: number, delta: number) => {
-    setCartItems(cartItems.map(item => {
-      if (item.id === id) {
-        const newQuantity = Math.max(1, item.quantity + delta);
-        return { ...item, quantity: newQuantity };
+  const loadCart = async () => {
+    setLoading(true);
+    setAuthError("");
+    try {
+      const res = await fetch("/api/cart");
+      if (res.status === 401) {
+        setAuthError("Please log in to view your cart.");
+        setCartItems([]);
+        return;
       }
-      return item;
-    }));
+      const data = await res.json();
+      if (res.ok) {
+        setCartItems(data.items ?? []);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const removeItem = (id: number) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
+  useEffect(() => {
+    loadCart();
+  }, []);
+
+  const updateQuantity = async (itemId: string, delta: number) => {
+    const current = cartItems.find((item) => item._id === itemId);
+    if (!current) return;
+    const newQuantity = Math.max(1, current.quantity + delta);
+    const res = await fetch(`/api/cart/${itemId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ quantity: newQuantity }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setCartItems(data.items ?? []);
+    }
   };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const removeItem = async (itemId: string) => {
+    const res = await fetch(`/api/cart/${itemId}`, { method: "DELETE" });
+    if (res.ok) {
+      const data = await res.json();
+      setCartItems(data.items ?? []);
+    }
+  };
+
+  const subtotal = useMemo(
+    () => cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    [cartItems]
+  );
   const tax = subtotal * 0.08;
   const total = subtotal + tax;
 
@@ -39,7 +83,18 @@ export default function CartPage() {
           </span>
         </div>
 
-        {cartItems.length === 0 ? (
+        {loading ? (
+          <div className="bg-surface/50 border border-gray-800 rounded-2xl p-16 text-center text-white">
+            Loading cart...
+          </div>
+        ) : authError ? (
+          <div className="bg-surface/50 border border-gray-800 rounded-2xl p-16 text-center">
+            <h2 className="text-2xl font-bold text-white mb-4">{authError}</h2>
+            <Link href="/login?redirect=/cart" className="bg-neon-purple text-white font-bold py-3 px-8 rounded-full hover:shadow-[0_0_20px_rgba(176,38,255,0.4)] transition-all uppercase tracking-wider text-sm inline-block">
+              Log In
+            </Link>
+          </div>
+        ) : cartItems.length === 0 ? (
           <div className="bg-surface/50 border border-gray-800 rounded-2xl p-16 text-center">
             <svg className="w-24 h-24 text-gray-600 mx-auto mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -56,23 +111,23 @@ export default function CartPage() {
             {/* Cart Items List */}
             <div className="w-full lg:w-2/3 space-y-4">
               {cartItems.map(item => (
-                <div key={item.id} className="bg-surface border border-gray-800 rounded-xl p-4 flex flex-col sm:flex-row items-center gap-6 relative group">
+                <div key={item._id} className="bg-surface border border-gray-800 rounded-xl p-4 flex flex-col sm:flex-row items-center gap-6 relative group">
                   
                   {/* Remove Button */}
                   <button 
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => removeItem(item._id)}
                     className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition-colors bg-background p-1.5 rounded-full border border-gray-800 hover:border-red-500/50 hidden sm:block group-hover:opacity-100 opacity-60"
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                   </button>
 
-                  <div className="w-full sm:w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden border border-gray-700 relative">
+                  <div className="w-full sm:w-32 h-32 shrink-0 rounded-lg overflow-hidden border border-gray-700 relative">
                     <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
                   </div>
                   
                   <div className="flex-1 flex flex-col w-full">
                     <div className="flex justify-between items-start mb-1 pr-8">
-                      <Link href={`/product/${item.id}`}>
+                      <Link href={item.productType === "game" ? `/games/${item.productId}` : `/hardware/${item.productId}`}>
                         <h3 className="text-xl font-bold text-white hover:text-neon-purple transition-colors line-clamp-1">{item.title}</h3>
                       </Link>
                     </div>
@@ -80,11 +135,11 @@ export default function CartPage() {
                     
                     <div className="mt-auto flex items-end justify-between border-t border-gray-800 pt-4">
                       <div className="flex items-center gap-4 bg-background border border-gray-700 rounded-lg p-1">
-                        <button onClick={() => updateQuantity(item.id, -1)} className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800 rounded transition-colors">
+                        <button onClick={() => updateQuantity(item._id, -1)} className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800 rounded transition-colors">
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" /></svg>
                         </button>
                         <span className="w-6 text-center font-bold text-white">{item.quantity}</span>
-                        <button onClick={() => updateQuantity(item.id, 1)} className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800 rounded transition-colors">
+                        <button onClick={() => updateQuantity(item._id, 1)} className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800 rounded transition-colors">
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
                         </button>
                       </div>
@@ -96,7 +151,7 @@ export default function CartPage() {
                   </div>
                   
                   {/* Mobile Remove */}
-                  <button onClick={() => removeItem(item.id)} className="w-full mt-2 sm:hidden text-red-500 text-sm border border-red-500/30 rounded py-2 hover:bg-red-500/10 transition-colors uppercase font-bold tracking-wider">
+                  <button onClick={() => removeItem(item._id)} className="w-full mt-2 sm:hidden text-red-500 text-sm border border-red-500/30 rounded py-2 hover:bg-red-500/10 transition-colors uppercase font-bold tracking-wider">
                     Remove Item
                   </button>
                 </div>
@@ -131,7 +186,7 @@ export default function CartPage() {
                 </div>
 
                 <div className="space-y-3">
-                  <Link href="/checkout" className="w-full block text-center bg-neon-purple text-white font-bold py-4 rounded-xl shadow-[0_0_15px_rgba(176,38,255,0.3)] hover:shadow-[0_0_25px_rgba(176,38,255,0.6)] transition-all uppercase tracking-wider text-sm flex items-center justify-center gap-2">
+                  <Link href="/checkout" className="w-full text-center bg-neon-purple text-white font-bold py-4 rounded-xl shadow-[0_0_15px_rgba(176,38,255,0.3)] hover:shadow-[0_0_25px_rgba(176,38,255,0.6)] transition-all uppercase tracking-wider text-sm flex items-center justify-center gap-2">
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getHardwareById, hardwareData } from "@/lib/hardware-data";
+import AddToCartButton from "@/app/components/AddToCartButton";
+import GameReviews from "@/app/components/GameReviews";
 
 type HardwareDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -75,9 +77,15 @@ export default async function HardwareDetailPage({
             <p className="mt-6 text-gray-300 leading-relaxed">
               {product.description}
             </p>
-            <button className="mt-8 w-full rounded-lg bg-neon-purple px-4 py-3 font-bold text-white transition hover:brightness-110">
-              Add to cart
-            </button>
+            <AddToCartButton
+              productId={product.id}
+              productType="hardware"
+              title={product.title}
+              platform={product.platform}
+              price={product.price}
+              image={product.image}
+              className="mt-8 w-full rounded-lg bg-neon-purple px-4 py-3 font-bold text-white transition hover:brightness-110"
+            />
           </div>
         </div>
 
@@ -118,6 +126,10 @@ export default async function HardwareDetailPage({
               ))}
             </div>
           </aside>
+        </div>
+
+        <div className="mt-8">
+          <GameReviews productId={product.id} productType="hardware" />
         </div>
       </div>
     </div>

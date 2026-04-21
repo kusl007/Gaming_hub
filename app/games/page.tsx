@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { gamesData } from "@/lib/games-data";
+import AddToCartButton from "@/app/components/AddToCartButton";
 
 export default function GamesPage() {
   return (
@@ -61,9 +62,15 @@ export default function GamesPage() {
                         {"★".repeat(game.rating)}{"☆".repeat(5-game.rating)}
                       </div>
                     </div>
-                    <button className="w-full bg-black border border-neon-green text-neon-green hover:bg-neon-green hover:text-black font-bold py-2.5 rounded-lg transition-all uppercase text-xs tracking-wider shadow-[0_0_10px_rgba(57,255,20,0.1)] hover:shadow-[0_0_15px_rgba(57,255,20,0.4)]">
-                      Add to Cart
-                    </button>
+                    <AddToCartButton
+                      productId={game.id}
+                      productType="game"
+                      title={game.title}
+                      platform={game.platform}
+                      price={game.price}
+                      image={game.image}
+                      className="w-full bg-black border border-neon-green text-neon-green hover:bg-neon-green hover:text-black font-bold py-2.5 rounded-lg transition-all uppercase text-xs tracking-wider shadow-[0_0_10px_rgba(57,255,20,0.1)] hover:shadow-[0_0_15px_rgba(57,255,20,0.4)]"
+                    />
                   </div>
                 </div>
               </div>

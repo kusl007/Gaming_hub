@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/mongodb';
 import User from '@/models/User';
+import { signAuthToken } from '@/lib/auth';
 
 export async function POST(req: Request) {
   try {
@@ -39,13 +40,31 @@ export async function POST(req: Request) {
       password: hashedPassword,
     });
 
-    return NextResponse.json(
+    const token = signAuthToken({
+      id: String(user._id),
+      username: user.username,
+      email: user.email,
+    });
+
+    const response = NextResponse.json(
       { 
         message: 'User registered successfully', 
         user: { id: user._id, username: user.username, email: user.email }
       },
       { status: 201 }
     );
+
+    response.cookies.set({
+      name: 'auth_token',
+      value: token,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60,
+      path: '/',
+    });
+
+    return response;
     
   } catch (error: any) {
     console.error('Registration error:', error);

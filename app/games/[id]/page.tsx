@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getGameById, gamesData } from "@/lib/games-data";
+import AddToCartButton from "@/app/components/AddToCartButton";
+import GameReviews from "@/app/components/GameReviews";
 
 type GameDetailPageProps = {
   params: Promise<{ id: string }>;
@@ -96,9 +98,15 @@ export default async function GameDetailPage({ params }: GameDetailPageProps) {
                 {game.discount ? <span className="text-red-400">{game.discount}</span> : null}
                 <span className="text-4xl font-black text-white">{game.price}</span>
               </div>
-              <button className="mt-6 w-full rounded-lg bg-neon-green px-4 py-3 font-bold text-black transition hover:brightness-110">
-                Add to cart
-              </button>
+              <AddToCartButton
+                productId={game.id}
+                productType="game"
+                title={game.title}
+                platform={game.platform}
+                price={game.price}
+                image={game.image}
+                className="mt-6 w-full rounded-lg bg-neon-green px-4 py-3 font-bold text-black transition hover:brightness-110"
+              />
             </section>
 
             <section className="rounded-2xl border border-gray-800 bg-surface/40 p-6">
@@ -117,42 +125,8 @@ export default async function GameDetailPage({ params }: GameDetailPageProps) {
           </aside>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
-          <section className="rounded-2xl border border-gray-800 bg-surface/40 p-6">
-            <h2 className="text-2xl font-bold text-white mb-4">{game.comments.length} comments</h2>
-            <div className="space-y-4">
-              {(game.comments.length
-                ? game.comments
-                : [{ author: "gamer-demo", text: "Great game and instant delivery. Waiting for more DLC.", timeAgo: "recently" }]
-              ).map((comment) => (
-                <article key={`${comment.author}-${comment.timeAgo}`} className="rounded-xl border border-gray-800 p-4">
-                  <p className="font-semibold text-white">{comment.author}</p>
-                  <p className="text-gray-300 text-sm mt-1">{comment.text}</p>
-                  <p className="text-xs text-gray-500 mt-2">{comment.timeAgo}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="rounded-2xl border border-gray-800 bg-surface/40 p-6">
-            <h2 className="text-2xl font-bold text-white mb-1">Reviews</h2>
-            <p className="text-gray-400 text-sm mb-4">Game review score based on {game.reviewsCount} reviews</p>
-            <div className="space-y-4">
-              {(game.reviews.length
-                ? game.reviews
-                : [{ author: "player-one", text: "Very fun and polished experience.", date: "Recent", useful: 0 }]
-              ).map((review) => (
-                <article key={`${review.author}-${review.date}`} className="rounded-xl border border-gray-800 p-4">
-                  <p className="font-semibold text-white">{review.author}</p>
-                  <p className="text-gray-300 text-sm mt-1">{review.text}</p>
-                  <div className="mt-2 flex items-center justify-between text-xs text-gray-500">
-                    <span>{review.date}</span>
-                    <span>Useful? {review.useful}</span>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
+        <div className="mt-8">
+          <GameReviews productId={game.id} productType="game" />
         </div>
       </div>
     </div>

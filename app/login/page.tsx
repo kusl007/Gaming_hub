@@ -9,6 +9,7 @@ function LoginContent() {
   const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
@@ -39,8 +40,8 @@ function LoginContent() {
         throw new Error(data.error || "Login failed");
       }
 
-      // Automatically redirect to homepage or dashboard
-      router.push("/");
+      const redirectTo = searchParams?.get("redirect") || "/";
+      router.push(redirectTo);
       router.refresh(); // Refresh to catch new cookies in layouts
       
     } catch (err: any) {
@@ -101,13 +102,20 @@ function LoginContent() {
                 <a href="#" className="text-xs text-neon-green hover:underline">Forgot?</a>
               </div>
               <input 
-                type="password" 
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full bg-black/50 border border-gray-700 text-white rounded-xl focus:ring-2 focus:ring-neon-green focus:border-transparent block p-4 transition-all outline-none"
                 placeholder="••••••••"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="mt-2 text-xs text-gray-400 hover:text-white"
+              >
+                {showPassword ? "Hide password" : "Show password"}
+              </button>
             </div>
 
             <button 
