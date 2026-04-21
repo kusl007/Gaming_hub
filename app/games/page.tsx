@@ -2,14 +2,12 @@ import Link from "next/link";
 
 export default function GamesPage() {
   const games = [
-    { id: 1, title: "Starfield", platform: "PS5 / PC", price: "$69.99", rating: 5, image: "https://images.unsplash.com/photo-1627856013091-fed6e4e048c0?q=80&w=600&auto=format&fit=crop" },
-    { id: 2, title: "Diablo IV", platform: "XSX / PC", price: "$89.99", rating: 5, image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop" },
-    { id: 3, title: "Armored Core VI", platform: "PC / PS5", price: "$59.99", rating: 4, image: "https://images.unsplash.com/photo-1616450650567-c5d9ddcdccaa?q=80&w=600&auto=format&fit=crop" },
-    { id: 4, title: "Baldur's Gate 3", platform: "PC / PS5", price: "$59.99", rating: 5, image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop", mixBlend: "hue-rotate(90deg)" },
-    { id: 5, title: "Spider-Man 2", platform: "PS5", price: "$69.99", rating: 5, image: "https://images.unsplash.com/photo-1605901309584-818e25960b8f?q=80&w=600&auto=format&fit=crop" },
-    { id: 6, title: "Cyberpunk 2077", platform: "PC / PS5 / XSX", price: "$49.99", rating: 5, image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600&auto=format&fit=crop", mixBlend: "sepia(50%)" },
-    { id: 7, title: "Elden Ring", platform: "PC / PS5", price: "$59.99", rating: 5, image: "https://images.unsplash.com/photo-1627856013091-fed6e4e048c0?q=80&w=600&auto=format&fit=crop", mixBlend: "hue-rotate(180deg)" },
-    { id: 8, title: "Final Fantasy XVI", platform: "PS5", price: "$69.99", rating: 4, image: "https://images.unsplash.com/photo-1616450650567-c5d9ddcdccaa?q=80&w=600&auto=format&fit=crop", mixBlend: "grayscale(30%)" },
+    { id: 1, title: "Pragmata", platform: "Pragmata - Xbox Series X|S", price: "47.58 €", rating: 5, image: "/games/images/1.jpg", video: "/games/videos/1.webm" },
+    { id: 2, title: "Split Fiction-29%", platform: "Split Fiction - Xbox Series X|S", price: "35.57 €", rating: 5, image: "/games/images/2.jpg", video: "/games/videos/2.webm" },
+    { id: 3, title: "Borderlands 4 Super Deluxe Edition-43%", platform: "Borderlands 4 Super Deluxe Edition - Xbox Series X|S", price: "73.99 €", rating: 5, image: "/games/images/3.jpg", video: "/games/videos/3.webm" },
+    { id: 4, title: "Minecraft Ultimate Collection-47%", platform: "Minecraft Ultimate Collection - Xbox One & Xbox Series X|S", price: "21.25 €", rating: 5, image: "/games/images/4.jpg", video: "/games/videos/4.webm" },
+    { id: 5, title: "PGA Tour 2K25-60%", platform: "PGA Tour 2K25 - Xbox Series X|S", price: "29.99 €", rating: 5, image: "/games/images/5.jpg", video: "/games/videos/5.webm" },
+    { id: 6, title: "NHL 26-74%", platform: "NHL 26 - Xbox Series X|S", price: "29.99 €", rating: 5, image: "/games/images/6.jpg", video: "/games/videos/6.webm" },
   ];
 
   return (
@@ -35,52 +33,8 @@ export default function GamesPage() {
       </section>
 
       {/* Main Content Area */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full flex flex-col md:flex-row gap-8">
-        
-        {/* Filters Sidebar */}
-        <aside className="w-full md:w-64 flex-shrink-0">
-          <div className="sticky top-24 space-y-8 bg-surface/30 p-6 rounded-2xl border border-gray-800 backdrop-blur-sm">
-            <div>
-              <h3 className="text-white font-bold uppercase tracking-wider mb-4 border-b border-gray-800 pb-2">Categories</h3>
-              <ul className="space-y-3">
-                {["Action", "Adventure", "RPG", "Shooter", "Sports", "Strategy"].map((cat) => (
-                  <li key={cat}>
-                    <label className="flex items-center gap-3 cursor-pointer group">
-                      <input type="checkbox" className="form-checkbox text-neon-green bg-black border-gray-700 rounded focus:ring-neon-green/50 w-4 h-4 cursor-pointer" />
-                      <span className="text-gray-400 group-hover:text-white transition-colors">{cat}</span>
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-white font-bold uppercase tracking-wider mb-4 border-b border-gray-800 pb-2">Platform</h3>
-              <ul className="space-y-3">
-                {["PlayStation 5", "Xbox Series X", "PC", "Nintendo Switch"].map((plat) => (
-                  <li key={plat}>
-                    <label className="flex items-center gap-3 cursor-pointer group">
-                      <input type="checkbox" className="form-checkbox text-neon-green bg-black border-gray-700 rounded focus:ring-neon-green/50 w-4 h-4 cursor-pointer" />
-                      <span className="text-gray-400 group-hover:text-white transition-colors">{plat}</span>
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-white font-bold uppercase tracking-wider mb-4 border-b border-gray-800 pb-2">Price</h3>
-              <input type="range" className="w-full accent-neon-green bg-gray-800 h-1 rounded-lg appearance-none cursor-pointer" min="0" max="100" />
-              <div className="flex justify-between text-xs text-gray-500 mt-2">
-                <span>$0</span>
-                <span>$100+</span>
-              </div>
-            </div>
-          </div>
-        </aside>
-
-        {/* Games Grid */}
-        <div className="flex-1">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div className="w-full">
           <div className="flex justify-between items-center mb-8">
             <p className="text-gray-400">Showing <span className="text-white font-bold">24</span> results</p>
             <select className="bg-surface border border-gray-800 text-white text-sm rounded-lg focus:ring-neon-green focus:border-neon-green block p-2.5 outline-none cursor-pointer">
@@ -91,15 +45,23 @@ export default function GamesPage() {
             </select>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {games.map((game) => (
               <div key={game.id} className="bg-surface rounded-xl overflow-hidden border border-gray-800 hover:border-neon-green/50 transition-colors group flex flex-col h-full shadow-lg">
                 <Link href={`/product/${game.id}`} className="block h-60 overflow-hidden relative p-3">
                   <img 
                     src={game.image} 
                     alt={game.title} 
-                    className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-500" 
-                    style={game.mixBlend ? { filter: game.mixBlend } : {}}
+                    className="w-full h-full object-cover rounded-lg group-hover:opacity-0 transition-all duration-500" 
+                  />
+                  <video
+                    src={game.video}
+                    className="absolute inset-3 w-[calc(100%-24px)] h-[calc(100%-24px)] object-cover rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
                   />
                 </Link>
                 <div className="p-4 flex flex-col flex-1">
@@ -122,22 +84,6 @@ export default function GamesPage() {
                 </div>
               </div>
             ))}
-          </div>
-          
-          {/* Pagination */}
-          <div className="mt-12 flex justify-center">
-            <nav className="flex items-center gap-2">
-              <button className="p-2 rounded-lg bg-surface border border-gray-800 text-gray-400 hover:text-white transition-colors">
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-              </button>
-              <button className="w-10 h-10 rounded-lg bg-neon-green text-black font-bold flex items-center justify-center">1</button>
-              <button className="w-10 h-10 rounded-lg bg-surface border border-gray-800 text-gray-400 hover:border-gray-600 hover:text-white flex items-center justify-center transition-colors">2</button>
-              <button className="w-10 h-10 rounded-lg bg-surface border border-gray-800 text-gray-400 hover:border-gray-600 hover:text-white flex items-center justify-center transition-colors">3</button>
-              <span className="text-gray-500">...</span>
-              <button className="p-2 rounded-lg bg-surface border border-gray-800 text-gray-400 hover:text-white transition-colors">
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-              </button>
-            </nav>
           </div>
         </div>
 
