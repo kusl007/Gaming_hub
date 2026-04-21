@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
@@ -9,6 +10,7 @@ export default function Footer() {
             <span className="text-2xl font-bold tracking-tighter text-white">
               EVOLUTION<span className="text-neon-purple">.</span>
             </span>
+               <Image src="/logo.png" alt="Logo"className=" w-1/3" width={40} height={40}/>
             <p className="mt-4 text-gray-400 max-w-sm">
               The ultimate destination for next-gen gaming. Discover the latest AAA titles, cutting-edge hardware, and exclusive gear.
             </p>
