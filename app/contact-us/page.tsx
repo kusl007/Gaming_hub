@@ -1,3 +1,5 @@
+import ContactInquiryForm from "@/app/components/ContactInquiryForm";
+
 export default function ContactUsPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -29,20 +31,7 @@ export default function ContactUsPage() {
 
           <div className="rounded-2xl border border-gray-800 bg-surface/40 p-8">
             <h2 className="text-2xl font-bold text-white mb-6">Quick Contact Form</h2>
-            <form className="space-y-4">
-              <input type="text" className="w-full rounded-lg border border-gray-700 bg-black/30 px-4 py-3 text-white outline-none focus:border-neon-green" placeholder="Your name" />
-              <input type="email" className="w-full rounded-lg border border-gray-700 bg-black/30 px-4 py-3 text-white outline-none focus:border-neon-green" placeholder="Your email" />
-              <select className="w-full rounded-lg border border-gray-700 bg-black/30 px-4 py-3 text-white outline-none focus:border-neon-green">
-                <option>Order issue</option>
-                <option>Activation issue</option>
-                <option>Tournament question</option>
-                <option>General inquiry</option>
-              </select>
-              <textarea className="w-full rounded-lg border border-gray-700 bg-black/30 px-4 py-3 text-white outline-none focus:border-neon-green min-h-32" placeholder="Tell us what happened..." />
-              <button type="button" className="w-full rounded-lg bg-neon-green px-5 py-3 font-bold text-black hover:brightness-110 transition">
-                Submit Request
-              </button>
-            </form>
+            <ContactInquiryForm />
           </div>
         </div>
       </section>
