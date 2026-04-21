@@ -25,7 +25,7 @@ export default function ContactUsPage() {
               <p><span className="text-white font-semibold">Sales:</span> sales@sandeepgamingstore.com</p>
               <p><span className="text-white font-semibold">Phone:</span> +91 99999 99999</p>
               <p><span className="text-white font-semibold">Hours:</span> Mon - Sun, 9:00 AM to 11:00 PM IST</p>
-              <p><span className="text-white font-semibold">Address:</span> Sandeep Gaming Store, Bengaluru, India</p>
+              <p><span className="text-white font-semibold">Address:</span> Summer Row, Birmingham B3 1JB</p>
             </div>
           </div>
 

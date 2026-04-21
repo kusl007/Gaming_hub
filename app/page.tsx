@@ -194,6 +194,57 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* Extra sections to ensure rich scrollable homepage */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="lg:col-span-7 rounded-2xl border border-gray-800 bg-surface/40 p-6 md:p-8">
+            <h2 className="text-3xl font-black text-white mb-3">
+              Sandeep&apos;s Picks
+            </h2>
+            <p className="text-gray-300 mb-6">
+              Handpicked titles and gear chosen for story, performance, and pure fun.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { name: "Neon Co-op Night", desc: "Perfect duo sessions with Split Fiction." },
+                { name: "Loot & Chaos", desc: "Borderlands 4 Super Deluxe grind-ready." },
+                { name: "Creative Sandbox", desc: "Minecraft Ultimate Collection for everyone." },
+                { name: "Competitive Setup", desc: "Keyboard + mouse combo built for precision." },
+              ].map((card) => (
+                <div key={card.name} className="rounded-xl border border-gray-800 bg-black/30 p-4 hover:border-neon-green/30 transition-colors">
+                  <p className="text-white font-bold">{card.name}</p>
+                  <p className="text-gray-400 text-sm mt-1">{card.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 rounded-2xl border border-gray-800 bg-surface/40 p-6 md:p-8">
+            <h2 className="text-2xl font-bold text-white mb-4">Store Highlights</h2>
+            <div className="space-y-4">
+              {[
+                { title: "Instant cart sync", body: "Your cart is saved to your account and updates live." },
+                { title: "Real user reviews", body: "Only authenticated users can post product reviews." },
+                { title: "Tournament registrations", body: "Register for events and track your submissions." },
+              ].map((item) => (
+                <div key={item.title} className="rounded-xl border border-gray-800 bg-black/30 p-4">
+                  <p className="text-white font-semibold">{item.title}</p>
+                  <p className="text-gray-400 text-sm mt-1">{item.body}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 flex gap-3">
+              <Link href="/tournament" className="rounded-lg bg-neon-purple px-4 py-2 font-bold text-white hover:brightness-110 transition">
+                Explore Tournaments
+              </Link>
+              <Link href="/contact-us" className="rounded-lg border border-gray-700 px-4 py-2 font-bold text-gray-200 hover:border-gray-500 hover:text-white transition">
+                Contact Support
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
