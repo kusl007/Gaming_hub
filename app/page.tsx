@@ -42,7 +42,7 @@ export default function Home() {
             Experience Night City like never before. Navigate a web of espionage and political intrigue. <span className="text-neon-green font-semibold">BUY NOW!</span>
           </p>
           <div className="flex flex-wrap items-center gap-4">
-            <Link href="/product/1" className="bg-neon-green text-black font-bold py-3 px-8 rounded-full shadow-[0_0_15px_rgba(57,255,20,0.5)] hover:shadow-[0_0_25px_rgba(57,255,20,0.8)] transition-all transform hover:scale-105 uppercase tracking-wider text-sm inline-block">
+            <Link href="/product/1" className=" text-white bg-neon-green text-black font-bold py-3 px-8 rounded-full shadow-[0_0_15px_rgba(57,255,20,0.5)] hover:shadow-[0_0_25px_rgba(57,255,20,0.8)] transition-all transform hover:scale-105 uppercase tracking-wider text-sm inline-block">
               Shop Now
             </Link>
             <button className="bg-transparent text-white font-bold py-3 px-8 rounded-full border-2 border-white/20 hover:border-white hover:bg-white/10 transition-all uppercase tracking-wider text-sm flex items-center gap-2">

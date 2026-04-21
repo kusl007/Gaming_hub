@@ -63,7 +63,7 @@ export default function LoginPage() {
 
             <button 
               type="submit" 
-              className="w-full bg-neon-green text-black font-bold py-4 rounded-xl shadow-[0_0_15px_rgba(57,255,20,0.3)] hover:shadow-[0_0_25px_rgba(57,255,20,0.6)] transition-all uppercase tracking-wider text-sm mt-4"
+              className="w-full bg-neon-green text-black font-bold py-4 rounded-xl shadow-[0_0_15px_rgba(57,255,20,0.3)] hover:shadow-[0_0_25px_rgba(57,255,20,0.6)] transition-all uppercase tracking-wider text-sm mt-4 text-white"
             >
               Sign In
             </button>
