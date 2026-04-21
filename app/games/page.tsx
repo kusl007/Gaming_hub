@@ -35,15 +35,7 @@ export default function GamesPage() {
       {/* Main Content Area */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
         <div className="w-full">
-          <div className="flex justify-between items-center mb-8">
-            <p className="text-gray-400">Showing <span className="text-white font-bold">24</span> results</p>
-            <select className="bg-surface border border-gray-800 text-white text-sm rounded-lg focus:ring-neon-green focus:border-neon-green block p-2.5 outline-none cursor-pointer">
-              <option>Sort by: Featured</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
-              <option>Newest Arrivals</option>
-            </select>
-          </div>
+          
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {games.map((game) => (
