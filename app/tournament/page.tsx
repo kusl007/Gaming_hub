@@ -1,3 +1,5 @@
+import TournamentRegistrationForm from "@/app/components/TournamentRegistrationForm";
+
 const tournamentCards = [
   {
     name: "Neon Strike Invitational",
@@ -72,28 +74,7 @@ export default function TournamentPage() {
           <p className="text-gray-400 mb-6">
             Fill this form to register your team or solo profile for upcoming events.
           </p>
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input type="text" placeholder="Full name" className="rounded-lg border border-gray-700 bg-black/30 px-4 py-3 text-white outline-none focus:border-neon-purple" />
-            <input type="email" placeholder="Email address" className="rounded-lg border border-gray-700 bg-black/30 px-4 py-3 text-white outline-none focus:border-neon-purple" />
-            <input type="text" placeholder="Gamer tag / Team name" className="rounded-lg border border-gray-700 bg-black/30 px-4 py-3 text-white outline-none focus:border-neon-purple" />
-            <select className="rounded-lg border border-gray-700 bg-black/30 px-4 py-3 text-white outline-none focus:border-neon-purple">
-              <option>Select tournament</option>
-              {tournamentCards.map((card) => (
-                <option key={card.name}>{card.name}</option>
-              ))}
-            </select>
-            <select className="rounded-lg border border-gray-700 bg-black/30 px-4 py-3 text-white outline-none focus:border-neon-purple">
-              <option>Choose platform</option>
-              <option>PC</option>
-              <option>PlayStation 5</option>
-              <option>Xbox Series X|S</option>
-            </select>
-            <input type="text" placeholder="Country / Region" className="rounded-lg border border-gray-700 bg-black/30 px-4 py-3 text-white outline-none focus:border-neon-purple" />
-            <textarea placeholder="Tell us about your experience (optional)" className="md:col-span-2 rounded-lg border border-gray-700 bg-black/30 px-4 py-3 text-white outline-none focus:border-neon-purple min-h-32" />
-            <button type="button" className="md:col-span-2 rounded-lg bg-neon-purple text-white font-bold py-3 hover:brightness-110 transition">
-              Register for Tournament
-            </button>
-          </form>
+          <TournamentRegistrationForm tournamentCards={tournamentCards} />
         </div>
       </section>
     </div>
