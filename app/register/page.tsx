@@ -2,21 +2,50 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+    
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      setError("Passwords do not match!");
       return;
     }
-    // Frontend-only mock action for now
-    console.log("Registration attempted with:", username, email, password);
+
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Something went wrong during registration");
+      }
+
+      // Automatically redirect to login page after successful registration
+      router.push("/login?registered=true");
+      
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -38,6 +67,12 @@ export default function RegisterPage() {
               Create an account to track orders and save your wishlist.
             </p>
           </div>
+
+          {error && (
+            <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-xl mb-6 text-sm">
+              {error}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
@@ -101,9 +136,10 @@ export default function RegisterPage() {
 
             <button 
               type="submit" 
-              className="w-full bg-neon-purple text-white font-bold py-4 rounded-xl shadow-[0_0_15px_rgba(176,38,255,0.3)] hover:shadow-[0_0_25px_rgba(176,38,255,0.6)] transition-all uppercase tracking-wider text-sm"
+              disabled={isLoading}
+              className={`w-full text-white font-bold py-4 rounded-xl shadow-[0_0_15px_rgba(176,38,255,0.3)] transition-all uppercase tracking-wider text-sm ${isLoading ? 'bg-gray-600 cursor-not-allowed' : 'bg-neon-purple hover:shadow-[0_0_25px_rgba(176,38,255,0.6)]'}`}
             >
-              Create Account
+              {isLoading ? "Creating Account..." : "Create Account"}
             </button>
           </form>
 

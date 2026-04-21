@@ -1,16 +1,53 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function LoginPage() {
+function LoginContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
+  const [error, setError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (searchParams?.get("registered") === "true") {
+      setSuccessMsg("Registration successful! Please log in.");
+    }
+  }, [searchParams]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Frontend-only mock action for now
-    console.log("Login attempted with:", email, password);
+    setError("");
+    setSuccessMsg("");
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Login failed");
+      }
+
+      // Automatically redirect to homepage or dashboard
+      router.push("/");
+      router.refresh(); // Refresh to catch new cookies in layouts
+      
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -32,6 +69,18 @@ export default function LoginPage() {
               Enter your credentials to access your library.
             </p>
           </div>
+
+          {error && (
+            <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-xl mb-6 text-sm">
+              {error}
+            </div>
+          )}
+
+          {successMsg && (
+            <div className="bg-green-500/10 border border-green-500 text-green-500 px-4 py-3 rounded-xl mb-6 text-sm">
+              {successMsg}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
@@ -63,9 +112,10 @@ export default function LoginPage() {
 
             <button 
               type="submit" 
-              className="w-full bg-neon-green text-black font-bold py-4 rounded-xl shadow-[0_0_15px_rgba(57,255,20,0.3)] hover:shadow-[0_0_25px_rgba(57,255,20,0.6)] transition-all uppercase tracking-wider text-sm mt-4 text-white"
+              disabled={isLoading}
+              className={`w-full text-black font-bold py-4 rounded-xl shadow-[0_0_15px_rgba(57,255,20,0.3)] transition-all uppercase tracking-wider text-sm mt-4 ${isLoading ? 'bg-gray-600 cursor-not-allowed text-white shadow-none' : 'bg-neon-green hover:shadow-[0_0_25px_rgba(57,255,20,0.6)]'}`}
             >
-              Sign In
+              {isLoading ? "Signing In..." : "Sign In"}
             </button>
           </form>
 
@@ -79,4 +129,12 @@ export default function LoginPage() {
       </div>
     </div>
   );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-white">Loading...</div>}>
+      <LoginContent />
+    </Suspense>
+  )
 }
