@@ -99,20 +99,39 @@ function LoginContent() {
             <div className="space-y-2 relative">
               <div className="flex justify-between items-center pl-1">
                 <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">Password</label>
-                <a href="#" className="text-xs text-neon-green hover:underline">Forgot?</a>
+                <button type="button" className="text-xs text-neon-green/80 hover:text-neon-green transition-colors">Forgot?</button>
               </div>
-              <input 
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full bg-black/50 border border-gray-700 text-white rounded-xl focus:ring-2 focus:ring-neon-green focus:border-transparent block p-4 transition-all outline-none"
-                placeholder="••••••••"
-              />
+              <div className="relative">
+                <input 
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full bg-black/50 border border-gray-700 text-white rounded-xl focus:ring-2 focus:ring-neon-green focus:border-transparent block p-4 pr-12 transition-all outline-none"
+                  placeholder="••••••••"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute inset-y-0 right-0 px-4 text-gray-400 hover:text-white transition-colors"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? (
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5 0-9-4-10-7a18.07 18.07 0 012.859-4.227m3.111-2.184A9.956 9.956 0 0112 5c5 0 9 4 10 7a18.091 18.091 0 01-4.243 5.586M15 12a3 3 0 11-6 0 3 3 0 016 0zm6 9L3 3" />
+                    </svg>
+                  ) : (
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.27 2.944 9.542 7-1.272 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  )}
+                </button>
+              </div>
               <button
                 type="button"
                 onClick={() => setShowPassword((prev) => !prev)}
-                className="mt-2 text-xs text-gray-400 hover:text-white"
+                className="mt-2 text-xs text-gray-400 hover:text-white hidden"
               >
                 {showPassword ? "Hide password" : "Show password"}
               </button>

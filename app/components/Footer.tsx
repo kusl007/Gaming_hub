@@ -33,11 +33,7 @@ export default function Footer() {
                   Tournament
                 </Link>
               </li>
-              <li>
-                <Link href="/new-releases" className="text-base text-gray-400 hover:text-neon-purple transition-colors">
-                  New Releases
-                </Link>
-              </li>
+             
             </ul>
           </div>
           <div>
@@ -53,11 +49,7 @@ export default function Footer() {
                   About Us
                 </Link>
               </li>
-              <li>
-                <Link href="/shipping" className="text-base text-gray-400 hover:text-neon-purple transition-colors">
-                  Shipping & Returns
-                </Link>
-              </li>
+             
             </ul>
           </div>
         </div>

@@ -138,8 +138,11 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="text-xs uppercase border border-gray-700 rounded-lg px-3 py-1.5 text-gray-300 hover:text-white hover:border-neon-green/50"
+                className="inline-flex items-center gap-2 text-xs uppercase border border-neon-green/40 bg-neon-green/10 rounded-lg px-3 py-1.5 text-neon-green hover:bg-neon-green hover:text-black transition-colors font-semibold"
               >
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h5a2 2 0 012 2v1" />
+                </svg>
                 Logout
               </button>
             ) : (
@@ -201,7 +204,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="w-full rounded-lg border border-gray-700 px-3 py-2 text-left text-sm font-medium uppercase text-gray-300 hover:text-white hover:bg-white/5"
+                className="w-full rounded-lg border border-neon-green/40 bg-neon-green/10 px-3 py-2 text-left text-sm font-medium uppercase text-neon-green hover:bg-neon-green hover:text-black transition-colors"
               >
                 Logout ({user.username})
               </button>
