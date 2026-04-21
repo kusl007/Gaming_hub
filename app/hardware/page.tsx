@@ -86,7 +86,7 @@ export default function HardwarePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {hardware.map((item) => (
               <div key={item.id} className="bg-surface rounded-2xl overflow-hidden border border-gray-800 hover:border-neon-purple/50 transition-all group flex flex-col hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)]">
-                <div className="h-64 sm:h-80 bg-white/5 flex items-center justify-center p-8 relative overflow-hidden">
+                <Link href={`/product/${item.id}`} className="block h-64 sm:h-80 bg-white/5 flex items-center justify-center p-8 relative overflow-hidden">
                   {/* Backdrop glow effect on hover */}
                   <div className="absolute inset-0 bg-neon-purple/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-t-2xl"></div>
                   <img 
@@ -94,10 +94,12 @@ export default function HardwarePage() {
                     alt={item.title} 
                     className="w-full h-full object-contain relative z-10 group-hover:scale-110 transition-transform duration-700 drop-shadow-2xl" 
                   />
-                </div>
+                </Link>
                 <div className="p-6 flex flex-col flex-1 relative z-20 bg-surface">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-bold text-xl text-white uppercase">{item.title}</h3>
+                    <Link href={`/product/${item.id}`}>
+                      <h3 className="font-bold text-xl text-white uppercase hover:text-neon-purple transition-colors">{item.title}</h3>
+                    </Link>
                   </div>
                   <p className="text-sm text-neon-purple/80 mb-6 uppercase font-medium tracking-wide">{item.category}</p>
                   

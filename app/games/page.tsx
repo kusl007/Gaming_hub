@@ -94,16 +94,18 @@ export default function GamesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {games.map((game) => (
               <div key={game.id} className="bg-surface rounded-xl overflow-hidden border border-gray-800 hover:border-neon-green/50 transition-colors group flex flex-col h-full shadow-lg">
-                <div className="h-60 overflow-hidden relative p-3">
+                <Link href={`/product/${game.id}`} className="block h-60 overflow-hidden relative p-3">
                   <img 
                     src={game.image} 
                     alt={game.title} 
                     className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-500" 
                     style={game.mixBlend ? { filter: game.mixBlend } : {}}
                   />
-                </div>
+                </Link>
                 <div className="p-4 flex flex-col flex-1">
-                  <h3 className="font-bold text-lg text-white mb-1 uppercase line-clamp-1">{game.title}</h3>
+                  <Link href={`/product/${game.id}`}>
+                    <h3 className="font-bold text-lg text-white mb-1 uppercase line-clamp-1 hover:text-neon-green transition-colors">{game.title}</h3>
+                  </Link>
                   <p className="text-xs text-neon-green/80 mb-3 uppercase font-medium">{game.platform}</p>
                   
                   <div className="mt-auto pt-4 border-t border-gray-800/50 flex flex-col gap-3">
